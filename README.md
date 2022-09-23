@@ -1,4 +1,3 @@
 # Rocket-GUI
 GUI for the rocket!
-Different Widgets
-Graphics
+Different Widgets + Graphics
