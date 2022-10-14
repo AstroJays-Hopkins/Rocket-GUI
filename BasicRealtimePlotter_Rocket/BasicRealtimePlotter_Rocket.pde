@@ -234,21 +234,23 @@ void draw() {
   //image(background,800, 800); // Loads the Background image
   
   //compass whose needles don't rotate probably
-  heading = heading + .1;
+  heading = heading + 10;
   strokeWeight(2);
   circle(1500, 800, 200);
   color c = color(#66ccff);  // blue
   fill(c);  // Use color variable 'c' as fill color
   pushMatrix();
-  translate(0, 0); // Translates the coordinate system into the center of the screen, so that the rotation happen right in the center
+  translate(1500, 800); // Translates the coordinate system into the center of the screen, so that the rotation happen right in the center
   rotate(radians(-heading)); // Rotates the Compass around Z - Axis 
   //translate(1000, 800);  
   //rotate(0.2);
-  triangle(1492, 800, 1508, 800, 1500, 880);
+  
+  triangle(-5, 0, 5, 0, 0, 80);
   //popMatrix();
   c = color(#f44336);  
   fill(c); 
-  triangle(1492, 800, 1508, 800, 1500, 720);
+  //triangle(1492, 800, 1508, 800, 1500, 720);
+  triangle(-5, 0, 5, 0, 0, -80);
   popMatrix();
   //rotate(PI/3.0);
   //triangle(192, 200, 208, 200, 200, 120);
