@@ -3,6 +3,10 @@ import java.awt.Frame;
 import java.awt.BorderLayout;
 import controlP5.*; // http://www.sojamo.de/libraries/controlP5/
 import processing.serial.*;
+import processing.serial.*;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+
 
 /* SETTINGS BEGIN */
 
@@ -37,10 +41,14 @@ color[] graphColors = new color[6];
 
 // helper for saving the executing path
 String topSketchPath = "";
+float heading = 0;
+
 
 void setup() {
+
   surface.setTitle("Rocket GUI");
   //size(890, 620);
+  //size(1800, 1000,P3D);
   size(1800, 1000);
 
   // set line graph colors
@@ -117,6 +125,7 @@ void setup() {
   cp5.addToggle("lgVisible4").setPosition(x, y=y+40).setValue(int(getPlotterConfigString("lgVisible4"))).setMode(ControlP5.SWITCH).setColorActive(graphColors[3]);
   cp5.addToggle("lgVisible5").setPosition(x, y=y+40).setValue(int(getPlotterConfigString("lgVisible5"))).setMode(ControlP5.SWITCH).setColorActive(graphColors[4]);
   cp5.addToggle("lgVisible6").setPosition(x, y=y+40).setValue(int(getPlotterConfigString("lgVisible6"))).setMode(ControlP5.SWITCH).setColorActive(graphColors[5]);
+  
 }
 
 byte[] inBuffer = new byte[100]; // holds serial message
@@ -189,6 +198,7 @@ void draw() {
       catch (Exception e) {
       }
     }
+ 
   }
 
   // draw the bar chart
@@ -215,6 +225,38 @@ void draw() {
     if (int(getPlotterConfigString("lgVisible"+(i+1))) == 1)
       Velocity.LineGraph(lineGraphSampleNumbers, lineGraphValues[i]);
   }
+  stroke(60);          // Setting the outline (stroke) to black
+  fill(0);          // Setting the interior of a shape (fill) to grey
+  rect(890,580,300,100); // Drawing the rectangle
+  fill(255);
+  text(status_text(),1000,600);
+  
+  //image(background,800, 800); // Loads the Background image
+  
+  //compass whose needles don't rotate probably
+  heading = heading + .1;
+  strokeWeight(2);
+  circle(1500, 800, 200);
+  color c = color(#66ccff);  // blue
+  fill(c);  // Use color variable 'c' as fill color
+  pushMatrix();
+  translate(0, 0); // Translates the coordinate system into the center of the screen, so that the rotation happen right in the center
+  rotate(radians(-heading)); // Rotates the Compass around Z - Axis 
+  //translate(1000, 800);  
+  //rotate(0.2);
+  triangle(1492, 800, 1508, 800, 1500, 880);
+  //popMatrix();
+  c = color(#f44336);  
+  fill(c); 
+  triangle(1492, 800, 1508, 800, 1500, 720);
+  popMatrix();
+  //rotate(PI/3.0);
+  //triangle(192, 200, 208, 200, 200, 120);
+  //float radSec = 360 / 60 * second();
+  //pushMatrix();
+  //rotate(radians(radSec));F
+  //line(0, 0, 0, -95);
+  //popMatrix();
 
 }
 
@@ -276,6 +318,10 @@ void controlEvent(ControlEvent theEvent) {
   setChartSettings();
 }
 
+
+String status_text() {
+  return "THE ROCKET IS ON FIRE";
+}
 
 String getRocketAlt(){
   //should fetch and return the current altitude value
